@@ -1,0 +1,17 @@
+com.logicea.cardtask
+com.logicea.cardtask.config
+com.logicea.cardtask.controller
+com.logicea.cardtask.integration
+com.logicea.cardtask.audit
+com.logicea.cardtask.audit.loan
+com.logicea.cardtask.audit.auth
+com.logicea.cardtask.audit.user
+com.logicea.cardtask.persistence
+com.logicea.cardtask.service.cards
+com.logicea.cardtask.service.jwtauthentication
+com.logicea.cardtask.unit.controller
+com.logicea.cardtask.unit.service.cards
+com.logicea.cardtask.unit.service.jwtauthentication
+com.logicea.cardtask.util
+com.logicea.cardtask.util.exceptions
+com.logicea.cardtask.util.logger

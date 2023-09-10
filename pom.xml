@@ -8,11 +8,11 @@
         <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.logicea</groupId>
-    <artifactId>cardtask</artifactId>
+    <groupId>com.pemig</groupId>
+    <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cardtask</name>
-    <description>A task for Logicea interview</description>
+    <name>Pemig backend REST API</name>
+    <description>PEMIG API v1</description>
     <properties>
         <java.version>17</java.version>
     </properties>

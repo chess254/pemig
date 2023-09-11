@@ -1,6 +1,7 @@
 package com.pemig.api.loan.service;
 
 import com.pemig.api.loan.model.Loan;
+import com.pemig.api.loan.model.LoanDetails;
 import com.pemig.api.loan.model.LoanDto;
 import com.pemig.api.loan.model.LoanStatus;
 import com.pemig.api.loan.repository.LoanRepository;
@@ -61,17 +62,17 @@ public class LoanService {
     if (!authCheck.userHasAccessToLoan(loggedInUser, loanOptional.get())) {
       throw new UnauthorizedException(loggedInUser.getUsername());
     }
-    Loan oldCard = loanOptional.get();
-    LocalDateTime createdDateTime = oldCard.getCreatedDateTime();
-    String createdBy = oldCard.getCreatedBy();
+    Loan oldLoan = loanOptional.get();
+    LocalDateTime createdDateTime = oldLoan.getCreatedDateTime();
+    String createdBy = oldLoan.getCreatedBy();
     Loan newLoan =
         loanRepository.save(
             Loan.builder()
-                .id(oldCard.getId())
+                .id(oldLoan.getId())
                 .name(loanDto.getName())
                 .color(loanDto.getColor())
                 .description(loanDto.getDescription())
-                .status(Optional.ofNullable(loanDto.getStatus()).orElse(LoanStatus.TODO))
+                .status(Optional.ofNullable(loanDto.getStatus()).orElse(LoanStatus.APPLIED))
                 .build());
     newLoan.setCreatedDateTime(createdDateTime);
     newLoan.setCreatedBy(createdBy);
@@ -110,13 +111,13 @@ public class LoanService {
   }
 
   @Transactional
-  public LoanDto storeLoan(LoanDto cardDto) {
+  public LoanDto storeLoan(LoanDto loanDto) {
     Loan storedLoan =
         loanRepository.save(
             Loan.builder()
-                .name(cardDto.getName())
-                .color(cardDto.getColor())
-                .description(cardDto.getDescription())
+                .name(loanDto.getName())
+                .color(loanDto.getColor())
+                .description(loanDto.getDescription())
                 .build());
     return fromLoanEntityToLoanDto(storedLoan);
   }

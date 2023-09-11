@@ -9,6 +9,6 @@ package com.pemig.api.util.exceptions;
 public class CardNameBlankException extends RuntimeException{
 
     public CardNameBlankException(){
-        super("Loan name should be provided and should not be blank.");
+        super("LoanDetails name should be provided and should not be blank.");
     }
 }

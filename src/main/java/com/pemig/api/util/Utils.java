@@ -4,6 +4,7 @@ package com.pemig.api.util;
 import com.pemig.api.card.model.CardDto;
 import com.pemig.api.card.model.Card;
 import com.pemig.api.loan.model.Loan;
+import com.pemig.api.loan.model.LoanDetails;
 import com.pemig.api.loan.model.LoanDto;
 
 public final class Utils {

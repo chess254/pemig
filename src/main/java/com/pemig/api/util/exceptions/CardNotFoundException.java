@@ -12,7 +12,7 @@ public class CardNotFoundException extends RuntimeException {
     private final Long cardId;
 
     public CardNotFoundException(Long id) {
-        super("Loan id: " + id + " not found.");
+        super("LoanDetails id: " + id + " not found.");
         this.cardId = id;
     }
 }

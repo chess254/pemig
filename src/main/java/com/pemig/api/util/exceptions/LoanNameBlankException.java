@@ -9,6 +9,6 @@ package com.pemig.api.util.exceptions;
 public class LoanNameBlankException extends RuntimeException{
 
     public LoanNameBlankException(){
-        super("Loan name should be provided and should not be blank.");
+        super("LoanDetails name should be provided and should not be blank.");
     }
 }

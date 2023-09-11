@@ -211,7 +211,7 @@ public final class TestUtils {
   
   /* Other utilities */
 
-  // We will consider a LoanDto to be "equal" to a Loan if the non-audit fields match.
+  // We will consider a LoanDto to be "equal" to a LoanDetails if the non-audit fields match.
   public static boolean cardDtoAndEntityEqual(@NonNull CardDto cardDto, @NonNull Card card) {
     return Objects.equals(cardDto.getId(), card.getId())
             && Objects.equals(cardDto.getStatus(), card.getStatus())

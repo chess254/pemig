@@ -41,7 +41,7 @@ public class OpenApiConfig {
                 .addSchemas(
                     "FilterMap",
                     new Schema<Map<String, String>>()
-                        .addProperty(Const.NAME_FILTER_STRING, new StringSchema().example("Loan Name"))
+                        .addProperty(Const.NAME_FILTER_STRING, new StringSchema().example("LoanDetails Name"))
                         .addProperty(Const.COLOR_FILTER_STRING, new StringSchema().example("#000000"))
                         .addProperty(
                             Const.STATUS_FILTER_STRING, new StringSchema().example("TODO"))
@@ -55,7 +55,7 @@ public class OpenApiConfig {
                 .addSchemas(
                     "FullCardDto",
                     new Schema<Map<String, String>>()
-                        .addProperty(Const.NAME_FILTER_STRING, new StringSchema().example("Loan Name"))
+                        .addProperty(Const.NAME_FILTER_STRING, new StringSchema().example("LoanDetails Name"))
                         .addProperty(
                             "description", new StringSchema().example("Brief description for card"))
                         .addProperty(Const.COLOR_FILTER_STRING, new StringSchema().example("#FFFFFF"))

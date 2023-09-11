@@ -44,7 +44,7 @@ public class LoanDto {
   private String color;
 
   @Schema(hidden = true)
-  @Builder.Default private LoanStatus status = LoanStatus.TODO;
+  @Builder.Default private LoanStatus status = LoanStatus.APPLIED;
 
   @DateTimeFormat(pattern = GLOBAL_DATE_TIME_PATTERN)
   @JsonFormat(pattern = GLOBAL_DATE_TIME_PATTERN)

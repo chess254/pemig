@@ -12,7 +12,7 @@ public class LoanNotFoundException extends RuntimeException {
     private final Long loanId;
 
     public LoanNotFoundException(Long id) {
-        super("Loan id: " + id + " not found.");
+        super("LoanDetails id: " + id + " not found.");
         this.loanId = id;
     }
 }

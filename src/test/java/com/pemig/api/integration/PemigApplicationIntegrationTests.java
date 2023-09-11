@@ -186,7 +186,7 @@ public class PemigApplicationIntegrationTests {
   @Test
   public void whenPostingACardWithAStatusNotTODO_thenThatStatusIsIgnored() {
     adminLogin();
-    CardDto cardDto = CardDto.builder().name("Test Loan").status(Status.IN_PROGRESS).build();
+    CardDto cardDto = CardDto.builder().name("Test LoanDetails").status(Status.IN_PROGRESS).build();
     ResponseEntity<EntityModel<CardDto>> postResponse = cardController.postCard(cardDto);
     assertEquals(Status.TODO, postResponse.getBody().getContent().getStatus());
   }

@@ -24,11 +24,11 @@ public class CardDto {
   @Schema(example = "1", hidden = true)
   private Long id;
 
-  @Schema(example = "Loan Name")
+  @Schema(example = "LoanDetails Name")
   @Size(max = 50)
   private String name;
 
-  @Schema(example = "Brief Loan description")
+  @Schema(example = "Brief LoanDetails description")
   @Size(max = 100)
   private String description;
 

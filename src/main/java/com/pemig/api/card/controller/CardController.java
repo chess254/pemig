@@ -57,7 +57,7 @@ public class CardController {
       value = {
         @ApiResponse(
             responseCode = "201",
-            description = "Loan created",
+            description = "LoanDetails created",
             content = {
               @Content(
                   mediaType = "application/json",
@@ -68,7 +68,7 @@ public class CardController {
             }),
         @ApiResponse(
             responseCode = "400",
-            description = "Loan Name not provided",
+            description = "LoanDetails Name not provided",
             content = @Content),
         @ApiResponse(
             responseCode = "401",
@@ -90,7 +90,7 @@ public class CardController {
       value = {
         @ApiResponse(
             responseCode = "200",
-            description = "Loan retrieved",
+            description = "LoanDetails retrieved",
             content = {
               @Content(
                   mediaType = "application/json",
@@ -107,7 +107,7 @@ public class CardController {
             responseCode = "403",
             description = "Unauthorized.",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
   @GetMapping("/card/{id}")
   public ResponseEntity<EntityModel<CardDto>> getCard(@PathVariable Long id) {
@@ -180,12 +180,12 @@ public class CardController {
   }
 
 
-  @Operation(summary = "Replace a Loan")
+  @Operation(summary = "Replace a LoanDetails")
   @ApiResponses(
       value = {
         @ApiResponse(
             responseCode = "200",
-            description = "Loan successfully replaced",
+            description = "LoanDetails successfully replaced",
             content =
                 @Content(
                     mediaType = "application/json",
@@ -195,7 +195,7 @@ public class CardController {
                             ref = "#/components/schemas/LoanDto"))),
         @ApiResponse(
             responseCode = "400",
-            description = "Loan Name not provided",
+            description = "LoanDetails Name not provided",
             content = @Content),
         @ApiResponse(
             responseCode = "401",
@@ -205,7 +205,7 @@ public class CardController {
             responseCode = "403",
             description = "Unauthorized",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
   @PutMapping("/card/{id}")
   public ResponseEntity<EntityModel<CardDto>> putCard(
@@ -217,12 +217,12 @@ public class CardController {
     return ResponseEntity.ok(assembler.toModel(cardService.replaceCard(id, cardDto)));
   }
 
-  @Operation(summary = "Update a Loan")
+  @Operation(summary = "Update a LoanDetails")
   @ApiResponses(
       value = {
         @ApiResponse(
             responseCode = "200",
-            description = "Loan updated",
+            description = "LoanDetails updated",
             content =
                 @Content(
                     mediaType = "application/json",
@@ -242,7 +242,7 @@ public class CardController {
             responseCode = "403",
             description = "Unauthorized",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
   @PatchMapping("/card/{id}")
   public ResponseEntity<EntityModel<CardDto>> patchCard(
@@ -261,7 +261,7 @@ public class CardController {
       value = {
         @ApiResponse(
             responseCode = "204",
-            description = "Loan successfully deleted",
+            description = "LoanDetails successfully deleted",
             content = @Content),
         @ApiResponse(
             responseCode = "401",
@@ -271,7 +271,7 @@ public class CardController {
             responseCode = "403",
             description = "Unauthorized",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
   @DeleteMapping("/card/{id}")
   public ResponseEntity<?> deleteCard(@PathVariable Long id) {

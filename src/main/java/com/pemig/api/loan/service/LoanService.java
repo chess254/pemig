@@ -1,14 +1,12 @@
 package com.pemig.api.loan.service;
 
 import com.pemig.api.loan.model.Loan;
-import com.pemig.api.loan.model.LoanDetails;
 import com.pemig.api.loan.model.LoanDto;
 import com.pemig.api.loan.model.LoanStatus;
 import com.pemig.api.loan.repository.LoanRepository;
 import com.pemig.api.user.service.AuthCheck;
 import com.pemig.api.util.QueryParams;
 import com.pemig.api.util.Utils;
-import com.pemig.api.util.exceptions.CardNotFoundException;
 import com.pemig.api.util.exceptions.LoanNotFoundException;
 import com.pemig.api.util.exceptions.UnauthorizedException;
 import com.pemig.api.util.logger.Logs;
@@ -37,10 +35,10 @@ public class LoanService {
   private final LoanDtoToLoan loanDtoToLoan;
 
   @Transactional(readOnly = true)
-  public LoanDto getLoan(Long id) throws CardNotFoundException, UnauthorizedException {
+  public LoanDto getLoan(Long id) throws LoanNotFoundException, UnauthorizedException {
     Optional<Loan> loan = loanRepository.findById(id);
     if (loan.isEmpty()) {
-      throw new CardNotFoundException(id);
+      throw new LoanNotFoundException(id);
     }
     User loggedInUser =
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -70,7 +68,6 @@ public class LoanService {
             Loan.builder()
                 .id(oldLoan.getId())
                 .name(loanDto.getName())
-                .color(loanDto.getColor())
                 .description(loanDto.getDescription())
                 .status(Optional.ofNullable(loanDto.getStatus()).orElse(LoanStatus.APPLIED))
                 .build());
@@ -85,7 +82,7 @@ public class LoanService {
   public LoanDto updateLoan(Long id, LoanDto cardDto){
     Optional<Loan> loanOptional = loanRepository.findById(id);
     if(loanOptional.isEmpty()){
-      throw new CardNotFoundException(id);
+      throw new LoanNotFoundException(id);
     }
     User loggedInUser =
             (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -100,7 +97,6 @@ public class LoanService {
             .id(loan.getId())
             .name(loan.getName())
             .description(loan.getDescription())
-            .color(loan.getColor())
             .status(loan.getStatus())
             .build());
     patchedLoan.setCreatedDateTime(createdDateTime);
@@ -116,7 +112,6 @@ public class LoanService {
         loanRepository.save(
             Loan.builder()
                 .name(loanDto.getName())
-                .color(loanDto.getColor())
                 .description(loanDto.getDescription())
                 .build());
     return fromLoanEntityToLoanDto(storedLoan);
@@ -128,11 +123,15 @@ public class LoanService {
       throws UnauthorizedException {
     User loggedInUser =
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    if (authCheck.userIsMember(loggedInUser)
-        && filterParamsIncludeOtherMemberCards(loggedInUser, params.getFilterParams())) {
+    if (!authCheck.userIsAdmin(loggedInUser)
+//        && filterParamsIncludeOtherMemberCards(loggedInUser, params.getFilterParams())
+      ) {
       throw new UnauthorizedException(loggedInUser.getUsername());
     }
-    return loanRepository.findLoansByProvidedFilters(params, loggedInUser).stream()
+//    return loanRepository.findLoansByProvidedFilters(params, loggedInUser).stream()
+//        .map(Utils::fromLoanEntityToLoanDto)
+//        .collect(Collectors.toList());
+    return loanRepository.findAll().stream()
         .map(Utils::fromLoanEntityToLoanDto)
         .collect(Collectors.toList());
   }
@@ -145,16 +144,22 @@ public class LoanService {
   }
 
   @Transactional
-  public void deleteLoan(Long id) throws CardNotFoundException, UnauthorizedException {
+  public void deleteLoan(Long id) throws LoanNotFoundException, UnauthorizedException {
     Optional<Loan> loan = loanRepository.findById(id);
     if (loan.isEmpty()) {
-      throw new CardNotFoundException(id);
+      throw new LoanNotFoundException(id);
     }
     User loggedInUser =
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    if (!authCheck.userHasAccessToLoan(loggedInUser, loan.get())) {
+//    if (!authCheck.userHasAccessToLoan(loggedInUser, loan.get())) {
+//      throw new UnauthorizedException(loggedInUser.getUsername());
+//    }
+
+    //only super admin can delete loan, and it should be a soft deleted
+      if (!authCheck.userIsAdmin(loggedInUser)) {
       throw new UnauthorizedException(loggedInUser.getUsername());
     }
+      //TODO make this soft-delete
     loanRepository.deleteById(id);
   }
 }

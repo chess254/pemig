@@ -34,10 +34,16 @@ public class Loan extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //    @NonNull
+//    @NotBlank
+    @Size(max = 50)
+    @Column(name = "customer_name", length = 50)
+    private String customerName;
+
     @NonNull
     @NotBlank
     @Size(max = 50)
-    @Column(name = "customer_name", length = 50)
+    @Column(name = "name", length = 50)
     private String name;
 
     @OneToOne
@@ -45,7 +51,6 @@ public class Loan extends Auditable<String> {
     private User customer;
 
     private BigDecimal principal;
-
 
     private float rate;
 
@@ -56,17 +61,9 @@ public class Loan extends Auditable<String> {
     private LoanDetails loanDetails;
 
 
-
     @Size(max = 100)
     @Column(name = "description", length = 100)
     private String description;
-
-    @Pattern(
-            regexp = "^#[a-fA-F0-9]{6}$|^$",
-            message = "Color must start with # and end with exactly 6 hex characters, or be entirely empty.",
-            flags = Pattern.Flag.CASE_INSENSITIVE)
-    @Column(name = "color", length = 7)
-    private String color;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
@@ -77,14 +74,8 @@ public class Loan extends Auditable<String> {
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        Class<?> oEffectiveClass =
-                o instanceof HibernateProxy
-                        ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass()
-                        : o.getClass();
-        Class<?> thisEffectiveClass =
-                this instanceof HibernateProxy
-                        ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
-                        : this.getClass();
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         LoanDetails that = (LoanDetails) o;
         return getId() != null && Objects.equals(getId(), that.getId());

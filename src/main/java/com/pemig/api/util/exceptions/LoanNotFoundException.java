@@ -9,10 +9,10 @@ import lombok.Getter;
 @Getter
 public class LoanNotFoundException extends RuntimeException {
 
-    private final Long loanId;
+    private final Long cardId;
 
     public LoanNotFoundException(Long id) {
-        super("LoanDetails id: " + id + " not found.");
-        this.loanId = id;
+        super("Loan id: " + id + " not found.");
+        this.cardId = id;
     }
 }

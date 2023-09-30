@@ -40,6 +40,24 @@ public final class Const {
   public static final SimpleGrantedAuthority MEMBER_AUTHORITY =
       new SimpleGrantedAuthority(Role.MEMBER.name());
 
+  public static final SimpleGrantedAuthority CLIENT_AUTHORITY =
+          new SimpleGrantedAuthority(Role.CLIENT.name());
+
+  public static final SimpleGrantedAuthority CLIENT_MANAGER_AUTHORITY =
+          new SimpleGrantedAuthority(Role.CLIENT_MANAGER.name());
+
+  public static final SimpleGrantedAuthority ACCOUNT_MANAGER_AUTHORITY =
+          new SimpleGrantedAuthority(Role.ACCOUNT_MANAGER.name());
+
+  public static final SimpleGrantedAuthority PAYMENT_ADMIN_AUTHORITY =
+          new SimpleGrantedAuthority(Role.PAYMENT_ADMIN.name());
+
+  public static final SimpleGrantedAuthority REPORTING_AND_ANALYTICS_ADMIN_AUTHORITY =
+          new SimpleGrantedAuthority(Role.REPORTING_AND_ANALYTICS_ADMIN.name());
+
+  public static final SimpleGrantedAuthority LOAN_AGENT_ADMIN_AUTHORITY =
+          new SimpleGrantedAuthority(Role.LOAN_AGENT_ADMIN.name());
+
 
   // Our global date-time pattern, with accuracy up to seconds.
   public static final String GLOBAL_DATE_TIME_PATTERN = "dd/MM/yyyy HH:mm:ss.SSS";

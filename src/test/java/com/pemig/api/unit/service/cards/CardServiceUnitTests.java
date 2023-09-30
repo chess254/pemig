@@ -15,7 +15,7 @@ import com.pemig.api.card.service.CardService;
 import com.pemig.api.util.QueryParams;
 import com.pemig.api.util.PaginationTestRunner;
 import com.pemig.api.util.SortingOrder;
-import com.pemig.api.util.exceptions.CardNotFoundException;
+import com.pemig.api.util.exceptions.LoanNotFoundException;
 import com.pemig.api.util.exceptions.UnauthorizedException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -78,7 +78,7 @@ public class CardServiceUnitTests {
     Assertions.assertTrue(TestUtils.cardDtoAndEntityEqual(cardService.getCard(CARD_DTO.getId()), CARD_ENTITY));
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenRepoCannotFindTheCard_thenCardNotFoundExceptionIsThrown() {
     when(cardRepository.findById(CARD_DTO.getId())).thenReturn(Optional.empty());
     SecurityContextHolder.getContext().setAuthentication(TestUtils.ADMIN_UPAT);
@@ -403,7 +403,7 @@ public class CardServiceUnitTests {
     cardService.deleteCard(CARD_DTO.getId());
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenRepoCannotFindTheCardWeWantToDelete_thenCardNotFoundExceptionIsThrown() {
     when(cardRepository.findById(CARD_DTO.getId())).thenReturn(Optional.empty());
     cardService.deleteCard(CARD_DTO.getId());
@@ -444,7 +444,7 @@ public class CardServiceUnitTests {
     cardService.replaceCard(replacementCard.getId(), replacementCard);
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenRepoCannotFindTheEntityToReplace_thenCardNotFoundExceptionIsThrown() {
     CardDto replacementCard =
         CardDto.builder()
@@ -499,7 +499,7 @@ public class CardServiceUnitTests {
     cardService.updateCard(CARD_DTO.getId(), patch);
   }
   
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenRepoCannotFindTheEntityToUpdate_thenCardNotFoundExceptionIsThrown(){
     SecurityContextHolder.getContext().setAuthentication(TestUtils.ADMIN_UPAT);
     CardDto patch = CardDto.builder()

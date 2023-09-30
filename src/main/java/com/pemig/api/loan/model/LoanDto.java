@@ -36,13 +36,6 @@ public class LoanDto {
   @Size(max = 100)
   private String description;
 
-  @Schema(example = "#111111")
-  @Pattern(
-      regexp = "^#[a-fA-F0-9]{6}$|^$",
-      message = "Hex colour code. Must start with #, followed by exactly six hexadecimal characters(0 to 9, A to F) e.g #059ACF",
-      flags = Pattern.Flag.CASE_INSENSITIVE)
-  private String color;
-
   @Schema(hidden = true)
   @Builder.Default private LoanStatus status = LoanStatus.APPLIED;
 

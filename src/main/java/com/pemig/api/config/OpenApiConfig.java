@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
     info =
         @Info(
-            title = "Logicea CARD api task",
+            title = "PEMIG API",
             contact =
                 @Contact(
                     name = "Caleb Achesa",

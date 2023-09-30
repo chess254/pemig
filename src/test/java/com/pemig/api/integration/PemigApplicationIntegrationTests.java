@@ -233,7 +233,7 @@ public class PemigApplicationIntegrationTests {
     Assertions.assertTrue(TestUtils.cardDtosEqual(cardDto, getResponse.getBody().getContent()));
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenTryingToGetACardThatHasNotBeenPosted_thenResourceCannotBeFound() {
     adminLogin();
     cardController.getCard(1L);
@@ -341,7 +341,7 @@ public class PemigApplicationIntegrationTests {
     Assertions.assertTrue(TestUtils.cardDtosEqual(putDto, putResponse.getBody().getContent()));
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenPuttingACardOnANonExistentId_thenResourceCannotBeFound() {
     adminLogin();
     cardController.putCard(1L, TestUtils.CARD_DTOS.get(0));
@@ -467,7 +467,7 @@ public class PemigApplicationIntegrationTests {
             patchResponse.getBody().getContent()));
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenApplyingAPatchOnANonExistentId_thenResourceCannotBeFound() {
     adminLogin();
     cardController.patchCard(1L, CardDto.builder().color("#45AA91").build());
@@ -526,7 +526,7 @@ public class PemigApplicationIntegrationTests {
     assertEquals(ResponseEntity.noContent().build(), cardController.deleteCard(cardId));
   }
 
-  @Test(expected = CardNotFoundException.class)
+  @Test(expected = LoanNotFoundException.class)
   public void whenDeletingANonExistentCard_thenResourceCannotBeFound() {
     adminLogin();
     cardController.deleteCard(1L);

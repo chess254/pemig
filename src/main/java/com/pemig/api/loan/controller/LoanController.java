@@ -44,7 +44,7 @@ import java.util.Map;
 @RequestMapping("/pemig/loans")
 @CrossOrigin
 @RequiredArgsConstructor
-@Tag(name = "2. LoanDetails endpoints")
+@Tag(name = "2. Loan endpoints")
 @Validated
 @Logs
 public class LoanController {
@@ -53,12 +53,12 @@ public class LoanController {
 
   private final LoanAssembler assembler;
 
-  @Operation(summary = "Add LoanDetails")
+  @Operation(summary = "Add Loan")
   @ApiResponses(
       value = {
         @ApiResponse(
             responseCode = "201",
-            description = "LoanDetails created",
+            description = "Loan created",
             content = {
               @Content(
                   mediaType = "application/json",
@@ -69,7 +69,7 @@ public class LoanController {
             }),
         @ApiResponse(
             responseCode = "400",
-            description = "LoanDetails Name not provided",
+            description = "Loan Name not provided",
             content = @Content),
         @ApiResponse(
             responseCode = "401",
@@ -91,7 +91,7 @@ public class LoanController {
       value = {
         @ApiResponse(
             responseCode = "200",
-            description = "LoanDetails retrieved",
+            description = "Loan retrieved",
             content = {
               @Content(
                   mediaType = "application/json",
@@ -108,7 +108,7 @@ public class LoanController {
             responseCode = "403",
             description = "Unauthorized.",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
       })
   @GetMapping("/{id}")
   public ResponseEntity<EntityModel<LoanDto>> getLoan(@PathVariable Long id) {
@@ -181,12 +181,12 @@ public class LoanController {
   }
 
 
-  @Operation(summary = "Replace a LoanDetails")
+  @Operation(summary = "Replace a Loan")
   @ApiResponses(
       value = {
         @ApiResponse(
             responseCode = "200",
-            description = "LoanDetails successfully replaced",
+            description = "Loan successfully replaced",
             content =
                 @Content(
                     mediaType = "application/json",
@@ -196,7 +196,7 @@ public class LoanController {
                             ref = "#/components/schemas/LoanDto"))),
         @ApiResponse(
             responseCode = "400",
-            description = "LoanDetails Name not provided",
+            description = "Loan Name not provided",
             content = @Content),
         @ApiResponse(
             responseCode = "401",
@@ -206,7 +206,7 @@ public class LoanController {
             responseCode = "403",
             description = "Unauthorized",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
       })
   @PutMapping("/{id}")
   public ResponseEntity<EntityModel<LoanDto>> putLoan(
@@ -218,12 +218,12 @@ public class LoanController {
     return ResponseEntity.ok(assembler.toModel(loanService.replaceLoan(id, loanDto)));
   }
 
-  @Operation(summary = "Update a LoanDetails")
+  @Operation(summary = "Update a Loan")
   @ApiResponses(
       value = {
         @ApiResponse(
             responseCode = "200",
-            description = "LoanDetails updated",
+            description = "Loan updated",
             content =
                 @Content(
                     mediaType = "application/json",
@@ -243,7 +243,7 @@ public class LoanController {
             responseCode = "403",
             description = "Unauthorized",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
       })
   @PatchMapping("/{id}")
   public ResponseEntity<EntityModel<LoanDto>> patchLoan(
@@ -262,7 +262,7 @@ public class LoanController {
       value = {
         @ApiResponse(
             responseCode = "204",
-            description = "LoanDetails successfully deleted",
+            description = "Loan successfully deleted",
             content = @Content),
         @ApiResponse(
             responseCode = "401",
@@ -272,7 +272,7 @@ public class LoanController {
             responseCode = "403",
             description = "Unauthorized",
             content = @Content),
-        @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
       })
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteLoan(@PathVariable Long id) {

@@ -62,7 +62,7 @@ public class ExceptionAdvice {
    * @return A {@link ResponseEntity} with the exception's message as the body and {@link HttpStatus#NOT_FOUND} as the status code.
    */
   @ResponseBody
-  @ExceptionHandler({UsernameNotFoundException.class, CardNotFoundException.class})
+  @ExceptionHandler({UsernameNotFoundException.class, LoanNotFoundException.class})
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public ResponseEntity<ExceptionWrapper> notFoundStatusMessage(Exception exc) {
     return new ResponseEntity<>(new ExceptionWrapper(exc.getMessage()), HttpStatus.NOT_FOUND);

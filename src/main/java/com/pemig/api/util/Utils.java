@@ -30,7 +30,6 @@ public final class Utils {
                 .id(loan.getId())
                 .description(loan.getDescription())
                 .name(loan.getName())
-                .color(loan.getColor())
                 .status(loan.getStatus())
                 .created(loan.getCreatedDateTime())
                 .createdBy(loan.getCreatedBy())

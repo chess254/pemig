@@ -41,7 +41,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/pemig")
+@RequestMapping("/pemig/loans")
 @CrossOrigin
 @RequiredArgsConstructor
 @Tag(name = "2. LoanDetails endpoints")
@@ -76,7 +76,7 @@ public class LoanController {
             description = "Unauthenticated user",
             content = @Content),
       })
-  @PostMapping("/loan")
+  @PostMapping
   public ResponseEntity<EntityModel<LoanDto>> postLoan(@RequestBody @Valid LoanDto loanDto)
       throws LoanNameNotValidException {
     if (StringUtils.isBlank(loanDto.getName())) {
@@ -110,7 +110,7 @@ public class LoanController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
-  @GetMapping("/loan/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<EntityModel<LoanDto>> getLoan(@PathVariable Long id) {
     return ResponseEntity.ok(assembler.toModel(loanService.getLoan(id)));
   }
@@ -142,7 +142,7 @@ public class LoanController {
             description = "Unauthorized",
             content = @Content)
       })
-  @GetMapping("/loan")
+  @GetMapping
   public ResponseEntity<CollectionModel<EntityModel<LoanDto>>> aggregateGetLoans(
           @Parameter(
                   name = "filterParams",
@@ -208,7 +208,7 @@ public class LoanController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
-  @PutMapping("/loan/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<EntityModel<LoanDto>> putLoan(
       @PathVariable Long id, @RequestBody @Valid LoanDto loanDto)
       throws LoanNameNotValidException {
@@ -245,7 +245,7 @@ public class LoanController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
-  @PatchMapping("/loan/{id}")
+  @PatchMapping("/{id}")
   public ResponseEntity<EntityModel<LoanDto>> patchLoan(
       @PathVariable Long id, @RequestBody @Valid LoanDto loanDto)
       throws LoanNameBlankException {
@@ -274,7 +274,7 @@ public class LoanController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
-  @DeleteMapping("/loan/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteLoan(@PathVariable Long id) {
     loanService.deleteLoan(id);
     return ResponseEntity.noContent().build();

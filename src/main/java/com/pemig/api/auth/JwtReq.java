@@ -18,7 +18,7 @@ public class JwtReq implements Serializable {
 
   private static final long serialVersionId = 97867564534231L;
 
-  @Schema(example = "user@cards.com")
+  @Schema(example = "admin@cards.com")
   @NonNull
   @NotBlank
   @Email

@@ -144,17 +144,17 @@ public class LoanController {
       })
   @GetMapping
   public ResponseEntity<CollectionModel<EntityModel<LoanDto>>> aggregateGetLoans(
-          @Parameter(
-                  name = "filterParams",
-                  in = ParameterIn.QUERY,
-                  schema =
-                  @Schema(
-                          type = "object",
-                          additionalProperties = Schema.AdditionalPropertiesValue.TRUE,
-                          ref = "#/components/schemas/FilterMap"),
-                  style = ParameterStyle.FORM,
-                  explode = Explode.TRUE)
-      @RequestParam Map<String, String> filterParams,
+//          @Parameter(
+//                  name = "filterParams",
+//                  in = ParameterIn.QUERY,
+//                  schema =
+//                  @Schema(
+//                          type = "object",
+//                          additionalProperties = Schema.AdditionalPropertiesValue.TRUE,
+//                          ref = "#/components/schemas/FilterMap"),
+//                  style = ParameterStyle.FORM,
+//                  explode = Explode.TRUE)
+//      @RequestParam Map<String, String> filterParams,
       @RequestParam(name = "page", defaultValue = Const.DEFAULT_PAGE_IDX) @Min(0) Integer page,
       @RequestParam(name = "items_in_page", defaultValue = Const.DEFAULT_PAGE_SIZE) @Min(1)
           Integer pageSize,
@@ -172,7 +172,7 @@ public class LoanController {
         assembler.toCollectionModel(
             loanService.getAllLoansByFilter(
                 QueryParams.builder()
-                    .filterParams(filterParams)
+//                    .filterParams(filterParams)
                     .page(page)
                     .pageSize(pageSize)
                     .sortByField(sortByField)

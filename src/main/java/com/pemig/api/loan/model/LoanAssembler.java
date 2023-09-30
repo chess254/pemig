@@ -28,7 +28,7 @@ public class LoanAssembler
         linkTo(
                 methodOn(LoanController.class)
                     .aggregateGetLoans(
-                        Collections.emptyMap(),
+//                        Collections.emptyMap(),
                         Integer.parseInt(DEFAULT_PAGE_IDX),
                         Integer.parseInt(DEFAULT_PAGE_SIZE),
                         DEFAULT_SORT_BY_FIELD,
@@ -44,7 +44,7 @@ public class LoanAssembler
         linkTo(
                 methodOn(LoanController.class)
                     .aggregateGetLoans(
-                        Collections.emptyMap(),
+//                        Collections.emptyMap(),
                         Integer.parseInt(DEFAULT_PAGE_IDX),
                         Integer.parseInt(DEFAULT_PAGE_SIZE),
                         DEFAULT_SORT_BY_FIELD,

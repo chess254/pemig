@@ -48,6 +48,7 @@ public class JwtUserService implements UserDetailsService {
       return new org.springframework.security.core.userdetails.User(
           user.get().getEmail(),
           user.get().getPassword(),
+          //TODO: check how to assign multiple authorities, and what authorizations those authorities would have perhaps use switch-case.
           Collections.singletonList(
               user.get().getRole() == Role.ADMIN ? Const.ADMIN_AUTHORITY : Const.MEMBER_AUTHORITY));
     } else {

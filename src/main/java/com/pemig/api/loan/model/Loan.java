@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.engine.internal.Cascade;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
@@ -56,7 +59,7 @@ public class Loan extends Auditable<String> {
 
     private int time;
 
-    @OneToOne
+    @OneToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_details_id", unique = true, updatable = false)
     private LoanDetails loanDetails;
 

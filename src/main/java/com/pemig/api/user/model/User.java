@@ -51,7 +51,7 @@ public class User extends Auditable<String> {
     @NotBlank
     private String lastName;
 
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "birth_date")
     @DateTimeFormat(pattern = Const.GLOBAL_DATE_TIME_PATTERN)
     @JsonFormat(pattern = Const.GLOBAL_DATE_TIME_PATTERN)
     private LocalDateTime birthDate;
@@ -106,10 +106,15 @@ public class User extends Auditable<String> {
     @NonNull
     private Role role;
 
-    public User(@NonNull String email, @NonNull String password, @NonNull Role role) {
+    public User(@NonNull String email, @NonNull String password, @NonNull Role role, @NonNull String firstName, @NonNull String middleName, @NonNull String lastName, @NonNull String idNo, LocalDateTime birthDate) {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.idNo = idNo;
+        this.birthDate = birthDate;
     }
 
     @Override

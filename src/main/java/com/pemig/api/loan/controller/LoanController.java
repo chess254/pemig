@@ -2,7 +2,9 @@ package com.pemig.api.loan.controller;
 
 import com.pemig.api.loan.model.LoanAssembler;
 import com.pemig.api.loan.model.LoanDto;
+import com.pemig.api.loan.model.LoanStatus;
 import com.pemig.api.loan.service.LoanService;
+import com.pemig.api.user.repository.UserRepository;
 import com.pemig.api.util.QueryParams;
 import com.pemig.api.util.SortingOrder;
 import com.pemig.api.util.exceptions.LoanNameBlankException;
@@ -31,6 +33,9 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +43,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -52,8 +58,9 @@ public class LoanController {
   private final LoanService loanService;
 
   private final LoanAssembler assembler;
+    private final UserRepository userRepository;
 
-  @Operation(summary = "Add Loan")
+    @Operation(summary = "Add Loan")
   @ApiResponses(
       value = {
         @ApiResponse(
@@ -76,15 +83,38 @@ public class LoanController {
             description = "Unauthenticated user",
             content = @Content),
       })
-  @PostMapping
+  @PostMapping("/admin")
   public ResponseEntity<EntityModel<LoanDto>> postLoan(@RequestBody @Valid LoanDto loanDto)
       throws LoanNameNotValidException {
     if (StringUtils.isBlank(loanDto.getName())) {
       throw new LoanNameNotValidException();
     }
+    //set initial loan status to APPLIED
+    loanDto.setStatus(LoanStatus.APPLIED);
     return new ResponseEntity<>(
         assembler.toModel(loanService.storeLoan(loanDto)), HttpStatus.CREATED);
   }
+
+    @PostMapping
+    public ResponseEntity<EntityModel<LoanDto>> applyLoan(@RequestBody @Valid LoanDto loanDto)
+            throws LoanNameNotValidException {
+        if (StringUtils.isBlank(loanDto.getName())) {
+            throw new LoanNameNotValidException();
+        }
+        //TODO: move this logic to service
+        //set initial loan status to APPLIED
+        loanDto.setStatus(LoanStatus.APPLIED);
+
+        User loggedInUser =
+                (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userEmail = loggedInUser.getUsername();
+        Optional<com.pemig.api.user.model.User> user = userRepository.findByEmail(userEmail);
+        if(user.isPresent()) {
+            loanDto.setCustomerId(String.valueOf(user.get().getId()));
+        }
+        return new ResponseEntity<>(
+                assembler.toModel(loanService.storeLoan(loanDto)), HttpStatus.CREATED);
+    }
 
   @Operation(summary = "Get loan by id")
   @ApiResponses(

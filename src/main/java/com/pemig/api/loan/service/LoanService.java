@@ -1,9 +1,12 @@
 package com.pemig.api.loan.service;
 
 import com.pemig.api.loan.model.Loan;
+import com.pemig.api.loan.model.LoanDetails;
 import com.pemig.api.loan.model.LoanDto;
 import com.pemig.api.loan.model.LoanStatus;
+import com.pemig.api.loan.repository.LoanDetailsRepository;
 import com.pemig.api.loan.repository.LoanRepository;
+import com.pemig.api.user.repository.UserRepository;
 import com.pemig.api.user.service.AuthCheck;
 import com.pemig.api.util.QueryParams;
 import com.pemig.api.util.Utils;
@@ -31,8 +34,10 @@ import static com.pemig.api.util.Utils.fromLoanEntityToLoanDto;
 public class LoanService {
 
   private final LoanRepository loanRepository;
+  private final LoanDetailsRepository loanDetailsRepository;
   private final AuthCheck authCheck;
   private final LoanDtoToLoan loanDtoToLoan;
+  private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
   public LoanDto getLoan(Long id) throws LoanNotFoundException, UnauthorizedException {
@@ -108,12 +113,32 @@ public class LoanService {
 
   @Transactional
   public LoanDto storeLoan(LoanDto loanDto) {
+
+    User loggedInUser =
+            (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String userEmail = loggedInUser.getUsername();
+    Optional<com.pemig.api.user.model.User> user = userRepository.findByEmail(userEmail);
+    if(user.isPresent()) {
+      loanDto.setCustomerId(String.valueOf(user.get().getId()));
+    }
+
+    //TODO: sort out duplicate entry exception handling
     Loan storedLoan =
         loanRepository.save(
             Loan.builder()
-                .name(loanDto.getName())
-                .description(loanDto.getDescription())
-                .build());
+                    .customerName(user.get().getFirstName() + " "+ user.get().getMiddleName() + " " + user.get().getLastName())
+                    .name(loanDto.getName())
+                    .customer(user.get())
+                    .principal(loanDto.getPrincipal())
+                    .rate(loanDto.getRate())
+                    .time(loanDto.getTime())
+                    .loanDetails(loanDetailsRepository.save(LoanDetails.builder().build()))
+                    .description(loanDto.getDescription())
+                    .build()
+        );
+//    LoanDetails loanDetails = loanDetailsRepository.save( LoanDetails.builder().build() );
+//    storedLoan.setLoanDetails(loanDetails);
+//    loanRepository.save(storedLoan);
     return fromLoanEntityToLoanDto(storedLoan);
   }
 

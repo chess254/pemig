@@ -19,8 +19,12 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 
   @Override
   public @NonNull Optional<String> getCurrentAuditor() {
+    //TODO: fix this to stop returning dummy data <String cannot be cast into UserDetails> when trying to extract user name for auditing
     return Optional.of(
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
             .getUsername());
+
+
+//    return Optional.of("test@test.com");
   }
 }

@@ -89,8 +89,7 @@ public class LoanController {
     if (StringUtils.isBlank(loanDto.getName())) {
       throw new LoanNameNotValidException();
     }
-    //set initial loan status to APPLIED
-    loanDto.setStatus(LoanStatus.APPLIED);
+
     return new ResponseEntity<>(
         assembler.toModel(loanService.storeLoan(loanDto)), HttpStatus.CREATED);
   }

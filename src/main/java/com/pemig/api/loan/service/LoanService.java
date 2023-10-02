@@ -113,32 +113,38 @@ public class LoanService {
 
   @Transactional
   public LoanDto storeLoan(LoanDto loanDto) {
-
+    //save new loan with status applies
     User loggedInUser =
             (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String userEmail = loggedInUser.getUsername();
     Optional<com.pemig.api.user.model.User> user = userRepository.findByEmail(userEmail);
     if(user.isPresent()) {
       loanDto.setCustomerId(String.valueOf(user.get().getId()));
+      //set initial loan status to APPLIED
+      loanDto.setStatus(LoanStatus.APPLIED);
     }
 
-    //TODO: sort out duplicate entry exception handling
+    //TODO: sort out duplicate entry exception handling, try-catch
     Loan storedLoan =
         loanRepository.save(
             Loan.builder()
-                    .customerName(user.get().getFirstName() + " "+ user.get().getMiddleName() + " " + user.get().getLastName())
-                    .name(loanDto.getName())
-                    .customer(user.get())
-                    .principal(loanDto.getPrincipal())
-                    .rate(loanDto.getRate())
-                    .time(loanDto.getTime())
-                    .loanDetails(loanDetailsRepository.save(LoanDetails.builder().build()))
-                    .description(loanDto.getDescription())
-                    .build()
+              .customerName(user.get().getFirstName() + " "+ user.get().getMiddleName() + " " + user.get().getLastName())
+              .name(loanDto.getName())
+              .customer(user.get())
+              .principal(loanDto.getPrincipal())
+              .rate(loanDto.getRate())
+              .time(loanDto.getTime())
+              .loanDetails(loanDetailsRepository.save(
+                LoanDetails.builder()
+                  .businessRegistrationDocumentUrl( loanDto.getBusinessRegDocUrl() )
+                  .nationalIdOrPassportUrl(loanDto.getIdOrPassportUrl())
+                  .payslipUrl(loanDto.getPayslipUrl())
+                  .build())
+              )
+              .description(loanDto.getDescription())
+              .build()
         );
-//    LoanDetails loanDetails = loanDetailsRepository.save( LoanDetails.builder().build() );
-//    storedLoan.setLoanDetails(loanDetails);
-//    loanRepository.save(storedLoan);
+    //TODO: publish an event to notify loan agent of loan application. include loan id
     return fromLoanEntityToLoanDto(storedLoan);
   }
 

@@ -35,8 +35,8 @@ public class LoanDetails extends Auditable<String> {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne(optional=false, mappedBy="loanDetails")
-  private Loan loan;
+//  @OneToOne(optional=false, mappedBy="loanDetails")
+//  private Loan loan;
 
   @OneToOne
   @JoinColumn(name = "approved_by_id")

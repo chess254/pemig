@@ -51,6 +51,15 @@ public class LoanDto {
   @Schema(example = "1")
   private long loanDetailsId;
 
+  @Schema(example = "Business Reg Url")
+  private String businessRegDocUrl;
+
+  @Schema(example = "id/passport url")
+  private String idOrPassportUrl;
+
+  @Schema(example = "Payslip url")
+  private String payslipUrl;
+
   @Schema(example = "Brief Loan description")
   @Size(max = 100)
   private String description;

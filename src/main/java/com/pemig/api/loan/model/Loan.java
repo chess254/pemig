@@ -49,7 +49,7 @@ public class Loan extends Auditable<String> {
     @Column(name = "name", length = 50)
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private User customer;
 
@@ -59,7 +59,7 @@ public class Loan extends Auditable<String> {
 
     private int time;
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "loan_details_id", unique = true, updatable = false)
     private LoanDetails loanDetails;
 

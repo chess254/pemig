@@ -7,7 +7,7 @@ import com.pemig.api.card.repository.CardRepository;
 import com.pemig.api.user.service.AuthCheck;
 import com.pemig.api.util.QueryParams;
 import com.pemig.api.util.Utils;
-import com.pemig.api.util.exceptions.LoanNotFoundException;
+import com.pemig.api.util.exceptions.CardNotFoundException;
 import com.pemig.api.util.exceptions.UnauthorizedException;
 import com.pemig.api.util.logger.Logs;
 import java.time.LocalDateTime;
@@ -33,10 +33,10 @@ public class CardService {
   private final CardDtoToCard cardDtoToCard;
 
   @Transactional(readOnly = true)
-  public CardDto getCard(Long id) throws LoanNotFoundException, UnauthorizedException {
+  public CardDto getCard(Long id) throws CardNotFoundException, UnauthorizedException {
     Optional<Card> card = cardRepository.findById(id);
-    if (card.isEmpty()) {
-      throw new LoanNotFoundException(id);
+    if (!card.isPresent()) {
+      throw new CardNotFoundException(id);
     }
     User loggedInUser =
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -48,10 +48,10 @@ public class CardService {
 
   @Transactional
   public CardDto replaceCard(Long id, CardDto cardDto)
-      throws LoanNotFoundException, UnauthorizedException {
+      throws CardNotFoundException, UnauthorizedException {
     Optional<Card> cardOptional = cardRepository.findById(id);
     if (cardOptional.isEmpty()) {
-      throw new LoanNotFoundException(id);
+      throw new CardNotFoundException(id);
     }
     User loggedInUser =
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -81,7 +81,7 @@ public class CardService {
   public CardDto updateCard(Long id, CardDto cardDto){
     Optional<Card> cardOptional = cardRepository.findById(id);
     if(cardOptional.isEmpty()){
-      throw new LoanNotFoundException(id);
+      throw new CardNotFoundException(id);
     }
     User loggedInUser =
             (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -130,7 +130,7 @@ public class CardService {
     }
     return cardRepository.findCardsByProvidedFilters(params, loggedInUser).stream()
         .map(Utils::fromCardEntityToCardDto)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private boolean filterParamsIncludeOtherMemberCards(User user, Map<String, String> filterParams) {
@@ -141,10 +141,10 @@ public class CardService {
   }
 
   @Transactional
-  public void deleteCard(Long id) throws LoanNotFoundException, UnauthorizedException {
+  public void deleteCard(Long id) throws CardNotFoundException, UnauthorizedException {
     Optional<Card> card = cardRepository.findById(id);
     if (card.isEmpty()) {
-      throw new LoanNotFoundException(id);
+      throw new CardNotFoundException(id);
     }
     User loggedInUser =
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

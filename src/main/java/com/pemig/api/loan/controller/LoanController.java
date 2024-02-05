@@ -5,18 +5,14 @@ import com.pemig.api.loan.model.LoanDto;
 import com.pemig.api.loan.model.LoanStatus;
 import com.pemig.api.loan.service.LoanService;
 import com.pemig.api.user.repository.UserRepository;
+import com.pemig.api.util.Const;
 import com.pemig.api.util.QueryParams;
 import com.pemig.api.util.SortingOrder;
 import com.pemig.api.util.exceptions.LoanNameBlankException;
 import com.pemig.api.util.exceptions.LoanNameNotValidException;
 import com.pemig.api.util.exceptions.WrongSortFieldException;
 import com.pemig.api.util.logger.Logs;
-import com.pemig.api.util.Const;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.Explode;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.enums.ParameterStyle;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +29,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
@@ -42,7 +37,6 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -304,7 +298,7 @@ public class LoanController {
         @ApiResponse(responseCode = "404", description = "Loan not found", content = @Content)
       })
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteLoan(@PathVariable Long id) {
+  public ResponseEntity<Object> deleteLoan(@PathVariable Long id) {
     loanService.deleteLoan(id);
     return ResponseEntity.noContent().build();
   }

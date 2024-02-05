@@ -2,15 +2,10 @@ package com.pemig.api.loan.model;
 
 
 import com.pemig.api.audit.Auditable;
-import com.pemig.api.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * DB entity class for loans.

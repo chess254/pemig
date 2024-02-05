@@ -9,7 +9,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static com.pemig.api.util.Const.*;
@@ -40,7 +39,7 @@ public class LoanAssembler
   public @NonNull CollectionModel<EntityModel<LoanDto>> toCollectionModel(
       @NonNull Iterable<? extends LoanDto> entities) {
     return CollectionModel.of(
-        IterableUtils.toList(entities).stream().map(this::toModel).collect(Collectors.toList()),
+        IterableUtils.toList(entities).stream().map(this::toModel).toList(),
         linkTo(
                 methodOn(LoanController.class)
                     .aggregateGetLoans(

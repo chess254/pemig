@@ -41,7 +41,8 @@ public class CardAssembler
   public @NonNull CollectionModel<EntityModel<CardDto>> toCollectionModel(
       @NonNull Iterable<? extends CardDto> entities) {
     return CollectionModel.of(
-        IterableUtils.toList(entities).stream().map(this::toModel).collect(Collectors.toList()),
+//        IterableUtils.toList(entities).stream().map(this::toModel).collect(Collectors.toList()),
+        IterableUtils.toList(entities).stream().map(this::toModel).toList(),
         linkTo(
                 methodOn(CardController.class)
                     .aggregateGetCards(

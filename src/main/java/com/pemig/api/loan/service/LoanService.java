@@ -125,10 +125,11 @@ public class LoanService {
     }
 
     //TODO: sort out duplicate entry exception handling, try-catch
+    //TODO find best way of choosing client when applying, either through logged in user of by supplying custoomer id or both depending on who is making the application.
     Loan storedLoan =
         loanRepository.save(
             Loan.builder()
-              .customerName(user.get().getFirstName() + " "+ user.get().getMiddleName() + " " + user.get().getLastName())
+              .customerName(user.get().getFirstName() + " " + user.get().getMiddleName() + " " + user.get().getLastName())
               .name(loanDto.getName())
               .customer(user.get())
               .principal(loanDto.getPrincipal())
@@ -156,15 +157,18 @@ public class LoanService {
         (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     if (!authCheck.userIsAdmin(loggedInUser)
 //        && filterParamsIncludeOtherMemberCards(loggedInUser, params.getFilterParams())
-      ) {
-      throw new UnauthorizedException(loggedInUser.getUsername());
-    }
+      )
+
+      if(authCheck.userIsClient(loggedInUser)){
+        return loanRepository.findLoansByProvidedFilters(params, loggedInUser).stream()
+                .map(Utils::fromLoanEntityToLoanDto).toList();
+      }
 //    return loanRepository.findLoansByProvidedFilters(params, loggedInUser).stream()
 //        .map(Utils::fromLoanEntityToLoanDto)
 //        .collect(Collectors.toList());
     return loanRepository.findAll().stream()
         .map(Utils::fromLoanEntityToLoanDto)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private boolean filterParamsIncludeOtherMemberCards(User user, Map<String, String> filterParams) {

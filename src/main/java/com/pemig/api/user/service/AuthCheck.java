@@ -2,10 +2,9 @@ package com.pemig.api.user.service;
 
 import com.pemig.api.card.model.Card;
 import com.pemig.api.loan.model.Loan;
-import com.pemig.api.loan.model.LoanDetails;
 import com.pemig.api.user.model.Role;
-import com.pemig.api.util.logger.Logs;
 import com.pemig.api.util.Const;
+import com.pemig.api.util.logger.Logs;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,15 @@ public class AuthCheck {
    */
   public boolean userIsMember(User user) {
     return user.getAuthorities().contains(Const.MEMBER_AUTHORITY) && user.getAuthorities().size() == 1;
+  }
+
+  /**
+   * Checks to see if a {@link  User} has ONLY the authorities of a {@link Role#CLIENT}
+   * @param user A {@link User} instance.
+   * @return {@literal true} iff the {@link User} has ONLY the authorities of a {@link Role#CLIENT}.
+   */
+  public boolean userIsClient(User user) {
+    return user.getAuthorities().contains(Const.CLIENT_AUTHORITY) && user.getAuthorities().size() == 1;
   }
 
   /**

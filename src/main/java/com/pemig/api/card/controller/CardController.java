@@ -274,7 +274,7 @@ public class CardController {
         @ApiResponse(responseCode = "404", description = "LoanDetails not found", content = @Content)
       })
   @DeleteMapping("/card/{id}")
-  public ResponseEntity<?> deleteCard(@PathVariable Long id) {
+  public ResponseEntity<Object> deleteCard(@PathVariable Long id) {
     cardService.deleteCard(id);
     return ResponseEntity.noContent().build();
   }

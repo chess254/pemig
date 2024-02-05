@@ -1,6 +1,5 @@
 package com.pemig.api.loan.repository;
 
-import com.pemig.api.loan.model.Loan;
 import com.pemig.api.loan.model.LoanDetails;
 import com.pemig.api.util.logger.Logs;
 import org.springframework.data.jpa.repository.JpaRepository;

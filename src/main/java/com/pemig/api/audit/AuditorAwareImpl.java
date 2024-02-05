@@ -23,8 +23,5 @@ public class AuditorAwareImpl implements AuditorAware<String> {
     return Optional.of(
         ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
             .getUsername());
-
-
-//    return Optional.of("test@test.com");
   }
 }

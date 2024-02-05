@@ -45,10 +45,10 @@ public class JwtUserService implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     Optional<User> user = userRepository.findByEmail(email);
     if (user.isPresent()) {
+      //TODO: check how to assign multiple authorities, and what authorizations those authorities would have perhaps use switch-case.
       return new org.springframework.security.core.userdetails.User(
-          user.get().getEmail(),
-          user.get().getPassword(),
-          //TODO: check how to assign multiple authorities, and what authorizations those authorities would have perhaps use switch-case.
+              user.get().getEmail(),
+              user.get().getPassword(),
           Collections.singletonList(
               user.get().getRole() == Role.ADMIN ? Const.ADMIN_AUTHORITY : Const.MEMBER_AUTHORITY)
       );
